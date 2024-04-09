@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EntradaComponent } from './entrada/entrada.component';
 import { PagoComponent } from './pago/pago.component';
 import { TramitePensionComponent } from './tramite-pension/tramite-pension.component';
 import { SalidaComponent } from './salida/salida.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,8 @@ import { SalidaComponent } from './salida/salida.component';
     EntradaComponent,
     PagoComponent,
     TramitePensionComponent,
-    SalidaComponent
+    SalidaComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

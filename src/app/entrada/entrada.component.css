@@ -1,0 +1,14 @@
+.btn-generar-ticket {
+    /* Agrega estilos personalizados para el botón "GENERAR TICKET" aquí */
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #007bff; /* Color primario de Bootstrap */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-generar-ticket:hover {
+    background-color: #0056b3; /* Color más oscuro cuando se hace hover */
+}

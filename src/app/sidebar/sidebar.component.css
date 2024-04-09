@@ -1,0 +1,49 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; /* Ancho fijo */
+    background: #343a40;
+    color: #fff;
+    overflow-y: auto;
+    transition: all 0.3s;
+}
+
+.sidebar-header {
+    padding: 20px;
+    white-space: nowrap; /* Evitar que el texto se rompa */
+    overflow: hidden; /* Ocultar el texto que no cabe */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+}
+
+.sidebar-header h3 {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.components {
+    padding: 20px;
+}
+
+.components li {
+    margin-bottom: 10px;
+}
+
+.components a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Evitar que el texto se rompa */
+    overflow: hidden; /* Ocultar el texto que no cabe */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+}
+
+.components a i {
+    margin-right: 10px;
+}
+
+.components a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
