@@ -7,6 +7,7 @@ import { PagoComponent } from './pago/pago.component';
 import { TramitePensionComponent } from './tramite-pension/tramite-pension.component';
 import { SalidaComponent } from './salida/salida.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
