@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     MatDialogModule,
     MatIconModule,
+    FormsModule,
     BrowserAnimationsModule
   ],
   providers: [],

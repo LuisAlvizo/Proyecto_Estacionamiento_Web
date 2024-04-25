@@ -12,7 +12,7 @@ export class EntradaComponent {
   constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   crearTicket(): void {
-    this.http.get<any>('http://localhost:21500/ticket/crear-ticket').subscribe(
+    this.http.get<any>('http://localhost:21500/ticket/crear').subscribe(
       (response) => {
         const dialogRef = this.dialog.open(TicketModalComponent, {
           data: { ticket: response, success: response.success }

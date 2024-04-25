@@ -1,13 +1,56 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 sidebar">
-        <app-sidebar></app-sidebar>
+  <div class="row">
+    <div class="col-md-2 sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-md-10">
+      <br>
+      <div>
+        <h2 class="mb-4">Formulario de Pago</h2>
+        <div class="form-group">
+          <label for="codigoTicket">Código de Ticket:</label>
+          <input type="text" id="codigoTicket" class="form-control" [(ngModel)]="codigoTicket">
+          <button class="btn btn-primary mt-2" (click)="calcularPago()">Escanear</button>
+        </div>
+        <div *ngIf="totalPagar !== 0">
+          <p class="mt-4">Total a Pagar: {{ totalPagar }}</p>
+          <div class="form-check-inline mt-3">
+            <input type="radio" id="efectivo" name="tipoPago" value="efectivo" class="form-check-input" [(ngModel)]="tipoPago">
+            <label for="efectivo" class="form-check-label">Efectivo</label>
+          </div>
+          <div class="form-check-inline">
+            <input type="radio" id="tarjeta" name="tipoPago" value="tarjeta" class="form-check-input" [(ngModel)]="tipoPago">
+            <label for="tarjeta" class="form-check-label">Tarjeta</label>
+          </div>
+          <div *ngIf="tipoPago === 'efectivo'">
+            <div class="form-group mt-4">
+              <label for="codigoDescuento">Código de Descuento:</label>
+              <input type="text" id="codigoDescuento" class="form-control" [(ngModel)]="codigoDescuento">
+              <button class="btn btn-primary mt-2" (click)="validarDescuento()">Validar</button>
+              <div *ngIf="tipoDescuento === 'porcentaje'">
+                <p class="mt-3">Total con descuento: {{ totalConDescuento }}</p>
+              </div>
+              <div *ngIf="tipoDescuento === 'hora_gratis'">
+                <p class="mt-3">Total con descuento: {{ totalConDescuento }}</p>
+              </div>
+              <button class="btn btn-primary mt-3" (click)="pagar()">Pagar</button>
+            </div>
+          </div>
+          <div *ngIf="tipoPago === 'tarjeta'">
+            <div class="form-group mt-4">
+              <label for="codigoPension">Código de la Pensión:</label>
+              <input type="text" id="codigoPension" class="form-control" [(ngModel)]="codigoPension">
+              <button class="btn btn-primary mt-2" (click)="validarPension()">Validar</button>
+              <p *ngIf="nombreUsuario" class="mt-3">Nombre del usuario: {{ nombreUsuario }}</p>
+              <button class="btn btn-primary mt-3" (click)="pagar()">Pagar</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="alertMessage" class="alert alert-danger mt-4">
+          {{ alertMessage }}
+        </div>
       </div>
-      <div class="col-md-10">
-            <br>
-            <h1>PAGO</h1>
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
-  
+</div>

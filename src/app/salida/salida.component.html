@@ -5,7 +5,13 @@
       </div>
       <div class="col-md-10">
             <br>
-            <h1>SALIDA</h1>
+            <div class="container">
+              <h2>Salida del Estacionamiento</h2>
+              <label for="codigoTicket">Código de Ticket:</label>
+              <input type="text" id="codigoTicket" [(ngModel)]="codigoTicket">
+              <button (click)="salirEstacionamiento()">Salir</button>
+            </div>
+            
         <router-outlet></router-outlet>
       </div>
     </div>
