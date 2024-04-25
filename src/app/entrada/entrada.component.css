@@ -12,3 +12,18 @@
 .btn-generar-ticket:hover {
     background-color: #0056b3; /* Color más oscuro cuando se hace hover */
 }
+
+.col-md-10 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .col-md-10 {
+    margin: auto;
+    text-align: center; /* Para centrar horizontalmente el contenido */
+  }
+  
+
+  

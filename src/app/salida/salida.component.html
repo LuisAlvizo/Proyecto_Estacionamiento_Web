@@ -7,9 +7,11 @@
             <br>
             <div class="container">
               <h2>Salida del Estacionamiento</h2>
-              <label for="codigoTicket">Código de Ticket:</label>
-              <input type="text" id="codigoTicket" [(ngModel)]="codigoTicket">
-              <button (click)="salirEstacionamiento()">Salir</button>
+              <div class="form-group">
+                <label for="codigoTicket">Código de Ticket:</label>
+                <input type="text" class="form-control" id="codigoTicket" [(ngModel)]="codigoTicket">
+              </div>
+              <button class="btn btn-primary" (click)="salirEstacionamiento()">Salir</button>
             </div>
             
         <router-outlet></router-outlet>
