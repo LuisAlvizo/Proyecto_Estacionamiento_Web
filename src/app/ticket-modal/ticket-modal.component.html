@@ -1,25 +1,28 @@
 <mat-dialog-content class="ticket-container">
-    <div *ngIf="success; else errorTemplate">
-      <div class="ticket-header">{{ ticket.estacionamiento_nombre }}</div>
-      <div class="ticket-details">
-        <p>Fecha y Hora de Entrada: {{ ticket.fecha_hora_entrada }}</p>
-        <p>Código de Ticket: {{ ticket.codigo_ticket }}</p>
-        <p>Empresa del Anuncio: {{ ticket.anuncio_empresa }}</p>
-        <p>Descripción del Anuncio: {{ ticket.anuncio_descripcion }}</p>
-        <img [src]="ticket.anuncio_img" alt="Anuncio" width="200" height="200">
-        <p>Nombre del Estacionamiento: {{ ticket.estacionamiento_nombre }}</p>
-        <p>Dirección del Estacionamiento: {{ ticket.estacionamiento_direccion }}</p>
-        <p>Tiempo de Holgura: {{ ticket.tiempo_holgura }}</p>
-        <p>Tarifa por Hora: {{ ticket.tarifa_hora }}</p>
-      </div>
-
-      <div class="ticket-footer">
-        <p>Gracias por estacionar con nosotros</p>
-        <img src="assets/logo.png" alt="Logo" />
-      </div>
+  <div *ngIf="success; else errorTemplate">
+    <div class="ticket-header">{{ ticket.estacionamiento_nombre }}</div>
+    <hr>
+    <div class="ticket-details">
+      <p>Fecha y Hora de Entrada: {{ ticket.fecha_hora_entrada }}</p>
+      <p>Código de Ticket: {{ ticket.codigo_ticket }}</p>
+      <hr>
+      <p> {{ ticket.anuncio_empresa }}</p>
+      <img [src]="ticket.anuncio_img" alt="Anuncio" width="200" height="200">
+      <p>{{ ticket.anuncio_descripcion }}</p>
+      <hr>
+      <p>{{ ticket.estacionamiento_nombre }}</p>
+      <p>Dirección del Estacionamiento: {{ ticket.estacionamiento_direccion }}</p>
+      <p>Tiempo de Holgura: {{ ticket.tiempo_holgura }}</p>
+      <p>Tarifa por Hora: {{ ticket.tarifa_hora }}</p>
     </div>
-    <ng-template #errorTemplate>
-      <p>Error al crear el ticket</p>
-    </ng-template>
-  </mat-dialog-content>
-  
+    <div class="qr-code-container">
+      <p>Código QR: {{ ticket.codigo_ticket }}</p>
+    </div>
+    <div class="ticket-footer">
+      <p>Gracias por estacionar con nosotros</p>
+    </div>
+  </div>
+  <ng-template #errorTemplate>
+    <p>Error al crear el ticket</p>
+  </ng-template>
+</mat-dialog-content>

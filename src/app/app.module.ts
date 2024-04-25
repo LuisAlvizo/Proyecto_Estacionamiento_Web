@@ -8,6 +8,10 @@ import { TramitePensionComponent } from './tramite-pension/tramite-pension.compo
 import { SalidaComponent } from './salida/salida.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TicketModalComponent } from './ticket-modal/ticket-modal.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -16,12 +20,16 @@ import { HttpClientModule } from '@angular/common/http';
     PagoComponent,
     TramitePensionComponent,
     SalidaComponent,
-    SidebarComponent
+    SidebarComponent,
+    TicketModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    MatIconModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
