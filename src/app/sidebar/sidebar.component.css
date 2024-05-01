@@ -3,18 +3,16 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 250px; /* Ancho fijo */
+    width: 250px;
     background: #343a40;
     color: #fff;
     overflow-y: auto;
     transition: all 0.3s;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-header {
     padding: 20px;
-    white-space: nowrap; /* Evitar que el texto se rompa */
-    overflow: hidden; /* Ocultar el texto que no cabe */
-    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
 }
 
 .sidebar-header h3 {
@@ -35,9 +33,9 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    white-space: nowrap; /* Evitar que el texto se rompa */
-    overflow: hidden; /* Ocultar el texto que no cabe */
-    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .components a i {

@@ -1,21 +1,20 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 sidebar">
-        <app-sidebar></app-sidebar>
+  <div class="row">
+    <div class="col-md-2 sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-md-10">
+      <br>
+      <div class="container">
+        <h2>Salida del Estacionamiento</h2>
+        <div class="form-group">
+          <label for="codigoTicket">Código de Ticket:</label>
+          <input type="text" class="form-control" id="codigoTicket" [(ngModel)]="codigoTicket">
+        </div>
+        <button class="btn btn-primary" (click)="salirEstacionamiento()">Salir</button>
       </div>
-      <div class="col-md-10">
-            <br>
-            <div class="container">
-              <h2>Salida del Estacionamiento</h2>
-              <div class="form-group">
-                <label for="codigoTicket">Código de Ticket:</label>
-                <input type="text" class="form-control" id="codigoTicket" [(ngModel)]="codigoTicket">
-              </div>
-              <button class="btn btn-primary" (click)="salirEstacionamiento()">Salir</button>
-            </div>
-            
-        <router-outlet></router-outlet>
-      </div>
+      <div *ngIf="alertMessage" [ngClass]="alertClass">{{ alertMessage }}</div>
+      <router-outlet></router-outlet>
     </div>
   </div>
-  
+</div>

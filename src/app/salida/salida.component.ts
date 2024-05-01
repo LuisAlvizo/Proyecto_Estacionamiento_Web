@@ -8,12 +8,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SalidaComponent {
   codigoTicket: string = '';
+  alertMessage: string = '';
+  alertClass: string = '';
 
   constructor(private http: HttpClient) {}
 
   salirEstacionamiento() {
     if (!this.codigoTicket) {
-      console.error('Se requiere un código de ticket');
+      this.showAlert('Se requiere un código de ticket', 'error-alert');
       return;
     }
 
@@ -21,16 +23,25 @@ export class SalidaComponent {
       .subscribe(
         response => {
           if (response.success) {
-            alert('Salida del estacionamiento');
+            this.showAlert('Salida del estacionamiento exitosa!!!', 'success-alert');
           } else {
-            console.error('Error al salir del estacionamiento:', response.message);
-            alert('Error al salir del estacionamiento: ' + response.message);
+            const errorMessage = 'Error al salir del estacionamiento: ';
+            this.showAlert(errorMessage, 'error-alert');
           }
         },
         error => {
-          console.error('Error al salir del estacionamiento:', error);
-          alert('Error al salir del estacionamiento: ' + error.message);
+          const errorMessage = 'Error al salir del estacionamiento: ';
+          this.showAlert(errorMessage, 'error-alert');
         }
       );
+  }
+
+  private showAlert(message: string, alertClass: string) {
+    this.alertMessage = message;
+    this.alertClass = alertClass;
+    setTimeout(() => {
+      this.alertMessage = '';
+      this.alertClass = '';
+    }, 5000); 
   }
 }

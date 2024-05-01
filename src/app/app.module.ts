@@ -15,6 +15,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { AdminpanelComponent } from './admin-panel/adminpanel.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     TramitePensionComponent,
     SalidaComponent,
     SidebarComponent,
-    TicketModalComponent
+    TicketModalComponent,
+    LoginFormComponent,
+    AdminpanelComponent
   ],
   imports: [
     BrowserModule,
