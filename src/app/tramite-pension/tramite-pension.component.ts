@@ -9,13 +9,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class TramitePensionComponent implements OnInit {
   username: string = '';
   password: string = '';
-  costoPension: number | undefined;
-  compraExitosa: boolean = false;
-  codigoPension: string | undefined;
-  fechaCompra: string | undefined;
-  fechaFin: string | undefined;
-  precio: number = 0;
-  mostrarPrecio: boolean = false;
+  costo: number = 0;
+  codigoPension: number = 0;
+  fechaCompra: string = '';
+  fechaFin: string = '';
+  errorMessage: string = ' ';
+  exitoMessage: string = ' ';
+  mostrarFormulario: boolean = true;
+  mostrarBotonVerPension: boolean = false;
+
 
   nombreCompleto: string = '';
   email: string = '';
@@ -31,37 +33,46 @@ export class TramitePensionComponent implements OnInit {
   }
 
   comprarPension() {
-    const data = { username: this.username, password: this.password };
-    this.http.post<any>('http://localhost:21500/pension/comprar', data)
-      .subscribe(response => {
-        if (response.success) {
-          this.precio = response.costo;
-          this.mostrarPrecio = true;
-        } else {
-          alert(response.message);
+    const body = { username: this.username, password: this.password };
+    this.http.post<any>('http://localhost:21500/pension/comprar', body)
+      .subscribe(
+        response => {
+          if (response.success) {
+            this.costo = response.tarifa;
+            this.mostrarFormulario = false; 
+            this.exitoMessage = 'La solicitud se ha realizado con éxito.';
+          } else {
+            this.errorMessage = response.message; 
+          }
+        },
+        error => {
+          console.error('Error:', error);
+          this.errorMessage = 'Error en la solicitud. Inténtelo de nuevo más tarde.';
         }
-      }, error => {
-        console.error('Error al realizar la solicitud:', error);
-        alert('Error al comunicarse con el servidor');
-      });
+      );
   }
 
   pagarPension() {
-    const data = { username: this.username, password: this.password };
-    this.http.post<any>('http://localhost:21500/pension/pagar', data)
-      .subscribe(response => {
-        if (response.success) {
-          this.codigoPension = response.codigo_pension;
-          this.fechaCompra = response.fecha_compra;
-          this.fechaFin = response.fecha_fin;
-        } else {
-          alert(response.message);
+    const body = { username: this.username, password: this.password };
+    this.http.post<any>('http://localhost:21500/pension/pagar', body)
+      .subscribe(
+        response => {
+          if (response.success) {
+            this.codigoPension = response.codigo_pension;
+            this.fechaCompra = response.fecha_compra;
+            this.fechaFin = response.fecha_fin;
+            this.mostrarBotonVerPension = true; 
+          } else {
+            this.errorMessage = response.message; 
+          }
+        },
+        error => {
+          console.error('Error:', error);
+          this.errorMessage = 'Error en la solicitud. Inténtelo de nuevo más tarde.';
         }
-      }, error => {
-        console.error('Error al realizar la solicitud:', error);
-        alert('Error al comunicarse con el servidor');
-      });
+      );
   }
+  
 
   crearUsuario() {
     if (this.passwordNuevo !== this.passwordConfirmacion) {

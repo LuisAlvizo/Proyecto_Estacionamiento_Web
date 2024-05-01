@@ -1,0 +1,27 @@
+.tarjeta-pension {
+    font-family:'Times New Roman', Times, serif;
+    text-align: center;
+    background-color: #f8f9fa; 
+    border: 1px solid #ced4da; 
+    border-radius: 10px; 
+    padding: 20px; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .tarjeta-pension h3 {
+    font-size: 18px; 
+    margin-bottom: 5px; 
+  }
+  
+  .tarjeta-pension p {
+    font-size: 18px; 
+    margin-bottom: 5px; 
+  }
+  
+  h5 {
+    font-size: 24px; 
+    margin-bottom: 10px; 
+    text-align: center;
+    align-items: center;
+  }
+
