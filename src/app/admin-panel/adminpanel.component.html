@@ -1,24 +1,109 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 sidebar">
-            <app-sidebar></app-sidebar>
-        </div>
-        <div class="col-md-10">
-            <br>
-            <div *ngIf="isLoggedIn">
-                <h2>PANEL DE ADMINISTRACIÓN</h2>
-                <!-- Contenido del panel de administración -->
-                <!-- Secciones para ver ganancias, número de autos, etc. -->
-                <!-- Botón de logout -->
-                <button class="btn btn-danger" (click)="logout()">Logout</button>
+      <!-- Barra lateral -->
+      <div class="col-md-2 sidebar">
+        <app-sidebar></app-sidebar>
+      </div>
+      <!-- Contenido principal -->
+      <div class="col-md-10">
+        <br>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="isLoggedIn">
+                <!-- Sección para ver las ganancias a lo largo del día -->
+                <h1>PANEL DE ADMINISTRACIÓN</h1>
+                <hr><br>
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Ganancias del día</h3>
+                    <button class="btn btn-primary" (click)="fetchGananciasHoy()">Consultar</button>
+                    <div *ngIf="gananciasHoy">
+                      <p class="card-text">Fecha: {{ gananciasHoy.fecha }}</p>
+                      <p class="card-text">Ganancias totales: {{ gananciasHoy.ganancias }}</p>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para ver el número de autos que han entrado a lo largo del día -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Número de autos que han entrado hoy</h3>
+                    <button class="btn btn-primary" (click)="fetchEntradas()">Consultar</button>
+                    <p class="card-text" *ngIf="entradas !== null">Entradas hoy: {{ entradas }}</p>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para ver el número de lugares ocupados -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Número de lugares ocupados</h3>
+                    <button class="btn btn-primary" (click)="fetchOcupados()">Consultar</button>
+                    <p class="card-text" *ngIf="ocupados !== null">Lugares ocupados: {{ ocupados }}</p>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para ver el número de lugares libres -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Número de lugares libres</h3>
+                    <button class="btn btn-primary" (click)="fetchLibres()">Consultar</button>
+                    <p class="card-text" *ngIf="libres !== null">Lugares libres: {{ libres }}</p>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para ver las ganancias de un día específico -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Ganancias de un día específico</h3>
+                    <input type="date" [(ngModel)]="selectedDate">
+                    <br><br>
+                    <button class="btn btn-primary" (click)="fetchGananciasDia(selectedDate)">Consultar</button>
+                    <div *ngIf="gananciasDia">
+                      <p class="card-text">Fecha: {{ gananciasDia.fecha }}</p>
+                      <p class="card-text">Ganancias totales: {{ gananciasDia.total }}</p>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para ver las ganancias de una semana específica -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Ganancias de una semana específica</h3>
+                    <input type="date" [(ngModel)]="selectedStartDate">
+                    <br><br>
+                    <button class="btn btn-primary" (click)="fetchGananciasSemana(selectedStartDate)">Consultar</button>
+                    <div *ngFor="let ganancia of gananciasSemana">
+                      <p class="card-text">{{ ganancia.fecha }}</p>
+                      <p class="card-text">Ganancias totales: {{ ganancia.total }}</p>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <!-- Sección para cambiar el tiempo de holgura del sistema -->
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Cambiar tiempo de holgura del sistema</h3>
+                    <input type="radio" id="5min" name="tiempoHolgura" value="5" [(ngModel)]="tiempoHolgura">
+                    <label for="5min">5 minutos</label>
+                    <input type="radio" id="10min" name="tiempoHolgura" value="10" [(ngModel)]="tiempoHolgura">
+                    <label for="10min">10 minutos</label>
+                    <input type="radio" id="15min" name="tiempoHolgura" value="15" [(ngModel)]="tiempoHolgura">
+                    <label for="15min">15 minutos</label>
+                    <br><br>
+                    <button class="btn btn-primary" (click)="updateHolgura()">Guardar</button>
+                  </div>
+                </div>
+                <br>
+                <!-- Botón para cerrar sesión -->
+                <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
               </div>
-              
-              <div *ngIf="!isLoggedIn">
-                <router-outlet></router-outlet>
-              </div>
-              
-            <router-outlet></router-outlet>
+              <br>
+              <router-outlet></router-outlet>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
   

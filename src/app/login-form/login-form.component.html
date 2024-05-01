@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <br>
             <div>
-                <h2>Login</h2>
+                <h1>PANEL DE ADMINISTRACIÓN</h1>
                 <div class="form-group">
                   <label for="username">Username:</label>
                   <input type="text" id="username" class="form-control" [(ngModel)]="username">
@@ -15,6 +15,7 @@
                   <label for="password">Password:</label>
                   <input type="password" id="password" class="form-control" [(ngModel)]="password">
                 </div>
+                <br>
                 <button class="btn btn-primary" (click)="login()">Login</button>
                 <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
               </div>
