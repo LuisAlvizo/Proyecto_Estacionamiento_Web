@@ -16,7 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { AdminpanelComponent } from './admin-panel/adminpanel.component';
+import { AdminPanelComponent } from './admin-panel/adminpanel.component';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { AdminpanelComponent } from './admin-panel/adminpanel.component';
     SidebarComponent,
     TicketModalComponent,
     LoginFormComponent,
-    AdminpanelComponent
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

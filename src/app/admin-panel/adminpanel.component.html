@@ -1,1 +1,24 @@
-<p>adminpanel works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class="col-md-10">
+            <br>
+            <div *ngIf="isLoggedIn">
+                <h2>PANEL DE ADMINISTRACIÓN</h2>
+                <!-- Contenido del panel de administración -->
+                <!-- Secciones para ver ganancias, número de autos, etc. -->
+                <!-- Botón de logout -->
+                <button class="btn btn-danger" (click)="logout()">Logout</button>
+              </div>
+              
+              <div *ngIf="!isLoggedIn">
+                <router-outlet></router-outlet>
+              </div>
+              
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+  </div>
+  

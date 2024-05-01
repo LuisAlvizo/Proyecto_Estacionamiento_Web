@@ -4,14 +4,19 @@ import { EntradaComponent } from './entrada/entrada.component';
 import { PagoComponent } from './pago/pago.component';
 import { SalidaComponent } from './salida/salida.component';
 import { TramitePensionComponent } from './tramite-pension/tramite-pension.component';
+import { AdminPanelComponent } from './admin-panel/adminpanel.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 const routes: Routes = [
   { path: 'entrada', component: EntradaComponent },
   { path: 'pago', component: PagoComponent },
   { path: 'salida', component: SalidaComponent },
   { path: 'tramite', component: TramitePensionComponent },
-  { path: '', redirectTo: '/entrada', pathMatch: 'full' }, // Redirige al componente de entrada por defecto
-  { path: '**', redirectTo: '/entrada' } // Redirige cualquier ruta no encontrada al componente de entrada
+  { path: 'admin', component: AdminPanelComponent },
+  { path: 'login', component: LoginFormComponent },
+  { path: '', redirectTo: '/entrada', pathMatch: 'full' }, 
+  { path: '**', redirectTo: '/entrada' } 
+  
 ];
 
 @NgModule({
