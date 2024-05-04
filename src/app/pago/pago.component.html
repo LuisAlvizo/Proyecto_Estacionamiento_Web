@@ -23,8 +23,8 @@
                 <label class="form-check-label" for="efectivo">Efectivo</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="tarjeta" name="tipoPago" value="PENSION" [(ngModel)]="tipoPago">
-                <label class="form-check-label" for="tarjeta">Tarjeta (Pensión)</label>
+                <input class="form-check-input" type="radio" id="pension" name="tipoPago" value="PENSION" [(ngModel)]="tipoPago">
+                <label class="form-check-label" for="pension">Pensión</label>
               </div>
             </div>
             <div *ngIf="tipoPago === 'EFECTIVO'">
@@ -39,7 +39,15 @@
                 <p>Nuevo Total: {{ nuevoTotal }}</p>
               </div>
             </div>
-            <div *ngIf="tipoPago === 'EFECTIVO' || (tipoPago === 'PENSION' && pensionValidada)">
+            <div *ngIf="tipoPago === 'PENSION'">
+              <div class="form-group">
+                <label for="codigoPension">Código de la Pensión:</label>
+                <input type="text" class="form-control" id="codigoPension" name="codigoPension" [(ngModel)]="codigoPension">
+                <button type="button" class="btn btn-primary mt-2" (click)="validarPension()">Validar</button>
+                <p *ngIf="nombreUsuario">Nombre del usuario: {{ nombreUsuario }}</p>
+              </div>
+            </div>
+            <div *ngIf="tipoPago === 'PENSION' || (tipoPago === 'PENSION' && pensionValidada)">
               <button type="button" class="btn btn-primary" (click)="realizarPago()">Pagar</button>
             </div>
           </div>

@@ -17,6 +17,8 @@ export class PagoComponent {
   ticketExiste: boolean = false;
   pensionValidada: boolean = false;
   totalAPagar: number = 0;
+  codigoPension: string = '';
+  nombreUsuario: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -41,9 +43,9 @@ export class PagoComponent {
           this.descuento = data.descuento;
           // Calcular nuevo total según el tipo de descuento
           if (data.tipo === 'PORCENTAJE') {
-            this.nuevoTotal = this.nuevoTotal - (this.nuevoTotal * (data.descuento / 100));
-          } else if (data.tipo === 'HORA_GRATIS' && this.nuevoTotal > 14) {
-            this.nuevoTotal -= 14;
+            this.nuevoTotal = this.totalAPagar - (this.totalAPagar * (data.descuento / 100));
+          } else if (data.tipo === 'HORA_GRATIS' && this.totalAPagar > 14) {
+            this.nuevoTotal = Math.max(this.totalAPagar - 14, 0);
           }
         } else {
           alert('El código de descuento no existe.');
@@ -51,13 +53,29 @@ export class PagoComponent {
       });
   }
 
+  validarPension() {
+    this.http.post<any>('http://localhost:21500/pension/validar', { codigo_pension: this.codigoPension })
+      .subscribe(data => {
+        if (data.success) {
+          this.pensionValidada = true;
+          this.nombreUsuario = data.nombre_usuario;
+        } else {
+          alert(data.error);
+        }
+      });
+  }
+
   realizarPago() {
+    if (this.tipoPago === 'PENSION' && !this.pensionValidada) {
+      alert('Por favor, valide la pensión primero.');
+      return;
+    }
+
     const pago: any = { metodo_pago: this.tipoPago }; // Definir como any para evitar errores de tipo
     if (this.tipoPago === 'EFECTIVO') {
       pago.codigo_descuento = this.codigoDescuento;
     } else if (this.tipoPago === 'PENSION') {
-      // Aquí puedes realizar la validación de la pensión si es necesaria
-      this.pensionValidada = true; // Simulación de validación exitosa
+      pago.codigo_pension = this.codigoPension;
     }
 
     this.http.post<any>('http://localhost:21500/ticket/pagar', { codigo_ticket: this.codigoTicket, pago })
