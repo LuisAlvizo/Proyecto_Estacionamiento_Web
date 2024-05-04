@@ -66,6 +66,11 @@ export class PagoComponent {
   }
 
   realizarPago() {
+    if (!this.ticketExiste) {
+      alert('Primero escanee un ticket válido.');
+      return;
+    }
+
     if (this.tipoPago === 'PENSION' && !this.pensionValidada) {
       alert('Por favor, valide la pensión primero.');
       return;
