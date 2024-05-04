@@ -39,6 +39,16 @@
                 <p>Nuevo Total: {{ nuevoTotal }}</p>
               </div>
             </div>
+            <div *ngIf="tipoPago === 'PENSION'">
+              <div class="form-group">
+                <label for="codigoPension">Código de la Pensión:</label>
+                <input type="text" class="form-control" id="codigoPension" name="codigoPension" [(ngModel)]="codigoPension">
+                <button type="button" class="btn btn-primary mt-2" (click)="validarPension()">Validar</button>
+              </div>
+              <div *ngIf="pensionValidada">
+                <p>Nombre del Usuario: {{ nombreUsuario }}</p>
+              </div>
+            </div>
             <div *ngIf="tipoPago === 'EFECTIVO' || (tipoPago === 'PENSION' && pensionValidada)">
               <button type="button" class="btn btn-primary" (click)="realizarPago()">Pagar</button>
             </div>
