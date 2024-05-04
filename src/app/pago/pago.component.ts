@@ -8,130 +8,73 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PagoComponent {
   codigoTicket: string = '';
-  totalPagar: number = 0;
   tipoPago: string = '';
   codigoDescuento: string = '';
+  descuentoValidado: boolean = false;
   tipoDescuento: string = '';
-  totalConDescuento: number = 0;
-  codigoPension: string = '';
-  nombreUsuario: string = '';
-  alertMessage: string = '';
+  descuento: number = 0;
+  nuevoTotal: number = 0;
+  ticketExiste: boolean = false;
+  pensionValidada: boolean = false;
+  totalAPagar: number = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   calcularPago() {
-    if (!this.codigoTicket) {
-      this.alertMessage = 'Se requiere un código de ticket';
-      return;
-    }
-
     this.http.get<any>(`http://localhost:21500/ticket/calcular_pago?codigo_ticket=${this.codigoTicket}`)
-      .subscribe(
-        response => {
-          if (response.success) {
-            this.totalPagar = response.pago;
-            this.alertMessage = '';
-          } else {
-            this.alertMessage = 'Ticket no encontrado';
-            this.totalPagar = 0;
-          }
-        },
-        error => {
-          this.alertMessage = 'Error al obtener el total a pagar';
-          console.error('Error al obtener el total a pagar:', error);
+      .subscribe(data => {
+        if (data.success) {
+          this.ticketExiste = true;
+          this.totalAPagar = data.pago; // Asignar el total a pagar recibido del servidor
+        } else {
+          alert('El ticket no existe.');
         }
-      );
+      });
   }
 
   validarDescuento() {
-    if (!this.codigoDescuento) {
-      this.alertMessage = 'Se requiere un código de descuento';
-      return;
-    }
-
-    this.http.get<any>(`http://localhost:21500/descuento/validar_descuento?codigo_descuento=${this.codigoDescuento}`)
-      .subscribe(
-        response => {
-          if (response.success) {
-            this.tipoDescuento = response.tipo_descuento;
-            if (this.tipoDescuento === 'porcentaje') {
-              const descuento = response.descuento;
-              this.totalConDescuento = this.totalPagar * (1 - descuento / 100);
-            } else if (this.tipoDescuento === 'hora_gratis') {
-              this.totalConDescuento = Math.max(this.totalPagar - 14, 0);
-            }
-            this.alertMessage = '';
-          } else {
-            this.alertMessage = 'Código de descuento no encontrado';
+    this.http.get<any>(`http://localhost:21500/descuento/validar_descuento/${this.codigoDescuento}`)
+      .subscribe(data => {
+        if (data.success) {
+          this.descuentoValidado = true;
+          this.tipoDescuento = data.tipo;
+          this.descuento = data.descuento;
+          // Calcular nuevo total según el tipo de descuento
+          if (data.tipo === 'PORCENTAJE') {
+            this.nuevoTotal = this.nuevoTotal - (this.nuevoTotal * (data.descuento / 100));
+          } else if (data.tipo === 'HORA_GRATIS' && this.nuevoTotal > 14) {
+            this.nuevoTotal -= 14;
           }
-        },
-        error => {
-          this.alertMessage = 'Error al validar el código de descuento';
-          console.error('Error al validar el código de descuento:', error);
+        } else {
+          alert('El código de descuento no existe.');
         }
-      );
+      });
   }
 
-  validarPension() {
-    if (!this.codigoPension) {
-      this.alertMessage = 'Se requiere un código de pensión';
-      return;
+  realizarPago() {
+    const pago: any = { metodo_pago: this.tipoPago }; // Definir como any para evitar errores de tipo
+    if (this.tipoPago === 'EFECTIVO') {
+      pago.codigo_descuento = this.codigoDescuento;
+    } else if (this.tipoPago === 'PENSION') {
+      // Aquí puedes realizar la validación de la pensión si es necesaria
+      this.pensionValidada = true; // Simulación de validación exitosa
     }
 
-    this.http.post<any>('http://localhost:21500/pension/validar', { codigo_pension: this.codigoPension })
-      .subscribe(
-        response => {
-          if (response.success) {
-            this.nombreUsuario = response.nombre_usuario;
-            this.alertMessage = '';
-          } else {
-            this.alertMessage = response.error;
+    this.http.post<any>('http://localhost:21500/ticket/pagar', { codigo_ticket: this.codigoTicket, pago })
+      .subscribe(data => {
+        if (data.success) {
+          alert('Pago realizado con éxito.');
+          // Habilitar botones para crear recibo y factura si el pago fue en efectivo
+          if (this.tipoPago === 'EFECTIVO') {
+            // Habilitar botones para crear recibo y factura
           }
-        },
-        error => {
-          this.alertMessage = 'Error al validar la pensión';
-          console.error('Error al validar la pensión:', error);
+        } else {
+          alert('Error al realizar el pago.');
         }
-      );
+      });
   }
 
-  pagar() {
-    let requestBody: any = { codigo_ticket: this.codigoTicket, pago: { metodo_pago: this.tipoPago } };
-
-    if (this.tipoPago === 'efectivo') {
-      if (!this.codigoDescuento) {
-        this.alertMessage = 'Se requiere un código de descuento';
-        return;
-      }
-      requestBody.pago.codigo_descuento = this.codigoDescuento;
-    } else if (this.tipoPago === 'tarjeta') {
-      if (!this.codigoPension) {
-        this.alertMessage = 'Se requiere un código de pensión';
-        return;
-      }
-      requestBody.pago.codigo_pension = this.codigoPension;
-    } else {
-      this.alertMessage = 'Seleccione un tipo de pago';
-      return;
-    }
-
-    this.http.post<any>('http://localhost:21500/ticket/pagar', requestBody)
-      .subscribe(
-        response => {
-          if (response.success) {
-            if (this.tipoPago === 'efectivo') {
-              this.alertMessage = 'Pago realizado con éxito. Recibo generado.';
-            } else {
-              this.alertMessage = 'Pago realizado con éxito.';
-            }
-          } else {
-            this.alertMessage = response.error;
-          }
-        },
-        error => {
-          this.alertMessage = 'Error al realizar el pago';
-          console.error('Error al realizar el pago:', error);
-        }
-      );
+  submitForm() {
+    // Aquí puedes agregar más lógica si es necesario
   }
 }
