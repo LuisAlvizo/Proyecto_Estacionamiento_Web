@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { jsPDF } from 'jspdf';
+import "jspdf-autotable";
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-admin-panel',
@@ -54,6 +57,18 @@ export class AdminPanelComponent {
         response => {
           if (response.success) {
             this.gananciasHoy = response.ganancias;
+            const doc = new jsPDF();
+            doc.text("Reporte de Ganancias del dia", 10, 10);
+            autoTable(doc, { 
+              head: [["pensiones", "tickets", "ganancias"]],
+              body: [ 
+                [response.pensiones.numero,
+                response.tickets.numero,
+                response.pensiones.ganancias+response.tickets.ganancias],
+              ],
+              
+            })
+            doc.save('ganancias-del-dia.pdf');
           } else {
             this.handleError(response.error);
           }
@@ -117,11 +132,25 @@ export class AdminPanelComponent {
   }
 
   fetchGananciasDia(fecha: string) {
+    
     this.http.get<any>(`http://localhost:21500/admin/ganancias_dia/${fecha}`, { headers: this.getHeaders() })
       .subscribe(
         response => {
           if (response.success) {
+           
             this.gananciasDia = response.ganancias;
+            const doc = new jsPDF();
+            doc.text(`Reporte de Ganancias del dia ${response.fecha}`, 10, 10);
+            autoTable(doc, { 
+              head: [["pensiones", "tickets", "ganancias"]],
+              body: [ 
+                [response.pensiones.numero,
+                response.tickets.numero,
+                response.pensiones.ganancias+response.tickets.ganancias],
+              ],
+              
+            })
+            doc.save(`ganancias-del-dia-${response.fecha}.pdf`);
           } else {
             this.handleError(response.message);
           }
@@ -139,6 +168,15 @@ export class AdminPanelComponent {
         response => {
           if (response.success) {
             this.gananciasSemana = response.semana;
+            console.log(response);
+            const doc = new jsPDF();
+            doc.text(`Reporte de Ganancias de la semana`, 10, 10);
+            autoTable(doc, { 
+              head: [["fecha","pensiones", "tickets", "ganancias"]],
+              body: this.gananciasSemana.map(dia=>[dia.fecha, dia.pensiones.numero,dia.tickets.numero, dia.pensiones.ganancias+dia.tickets.ganancias]),
+              
+            })
+            doc.save(`ganancias-de-la-semana.pdf`);
           } else {
             this.handleError(response.message);
           }
